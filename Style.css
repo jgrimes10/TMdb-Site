@@ -1,9 +1,56 @@
 body
 {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+
+	background-color: #EEE;
+}
+
+a
+{
+	text-decoration: none;
+}
+
+h1, h2, h3
+{
+	margin: 0;
+}
+
+#header
+{
+	background-color: #66CCFF;
+	color:white;
+	text-align: center;
+	padding: 10px;
+}
+
+#container
+{
+	background-color: white;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#content
+{
+	padding: 10px;
+}
+
+#navigation
+{
+	width: 180px;
+	float: left;
+}
+
+#main
+{
+	width: 600px;
+	float: right;
+}
+
+#numberResults
+{
+	color: transparent;
 }
 
 td
@@ -31,35 +78,23 @@ table
 	font-size: 12px;
 }
 
+#navigation .selected
+{
+	font-weight: bold;
+}
+
+#navigation ul
+{
+	list-style-type: none;
+	padding: 0;
+}
+
 .footer
 {
-	padding: 3px;
-	background-color: #efefef;
+	clear: both;
+	padding: 1px;
+	width: 800px;
+	background-color: #999999;
+	color: white;
 	text-align: center;
 }
-
-.content
-{
-	flex: 1 0 auto;
-}
-
-/* 
-#searchURL
-{
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	padding: 1rem;
-	background-color: #efefef;
-	text-align:center;
-	font-size: 10px;
-}
-
-#searchURLHeader
-{
-	position: fixed;
-	bottom: 20px;
-	right: 0;
-}
- */

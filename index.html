@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Movie Database Search </title>
+
+		<!-- Load in the javascript file and the css file -->
+		<script type="text/javascript" src="SearchBrains.js"></script>
+		<link rel="stylesheet" href="Style.css">
+
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">
+				<h1> Movie Database Search </h1>
+				<p> This site utilizes the TMdb API to search the title of movies. </p>
+			</div>
+
+			<div id="content">
+				<div id="navigation">
+					<h3> Navigation </h3>
+
+					<ul>
+						<li><a class="selected" href=""> Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li><a href="">Contact</a></li>
+					</ul>
+				</div>
+
+				<div id="main">
+
+					<form>
+						<fieldset>
+				
+						<legend> Movie Title Search: </legend>
+						<input type="text" name="movietitle" placeholder="Enter Movie Title" id="SearchText"/><br>
+						<button type="button" onclick="Search()">Search </button>
+								
+						</fieldset>
+					</form>
+
+					<div id="numberResults">
+						<p> Number of results: <span id="numResults"> nothing searched, yet.</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

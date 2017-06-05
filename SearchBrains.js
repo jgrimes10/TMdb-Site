@@ -53,7 +53,8 @@ function Search()
 				
 				var table = document.createElement("TABLE");
 				table.setAttribute("id", "movieTable");
-				document.body.appendChild(table);
+				var mainEle = document.getElementById("main");
+				mainEle.appendChild(table);
 		
 				for (i = 0; i < numResults; i++) 
 				{
@@ -77,10 +78,8 @@ function Search()
 				
 				// If results were found make sure that the number of results text and header are visible
 				var num = document.getElementById("numberResults");
+				num.style.color = "black";
 				num.style.display = 'block';
-				
-				var title = document.getElementById("titlesListHeader");
-				title.style.display = 'block';
 				
 				// Create the footer after table created so it will appear at bottom of page
 				CreateFooter(apiString);
@@ -98,11 +97,8 @@ function Search()
 				var num = document.getElementById("numberResults");
 				num.style.display = 'none';
 				
-				var title = document.getElementById("titlesListHeader");
-				title.style.display = 'none';
-				
-				// Add no results message to site
-				document.body.appendChild(noResultsMessage);
+				var mainEle = document.getElementById("main");
+				mainEle.appendChild(noResultsMessage);
 				
 				// Create the footer after table created so it will appear at bottom of page
 				CreateFooter(apiString);
@@ -140,9 +136,9 @@ function CreateFooter(url)
 	// Set footer text
 	para.innerHTML = url;
 	
-
+	var container = document.getElementById("container");
 	// Add the footer division to the site
-	document.body.appendChild(div);
+	container.appendChild(div);
 	// Add the footer title to the site
 	div.appendChild(header);
 	// Add the footer text to the site

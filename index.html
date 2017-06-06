@@ -9,38 +9,41 @@
 
 	</head>
 	<body>
+		<!-- The container for all of the information in the site -->
 		<div id="container">
+			<!-- The header for the website -->
 			<div id="header">
 				<h1> Movie Database Search </h1>
 				<p> This site utilizes the TMdb API to search the title of movies. </p>
 			</div>
-
+			<!-- The container for the main body of the site (navigation and content) -->
 			<div id="content">
+				<!-- The navigation section -->
 				<div id="navigation">
-					<h3> Navigation </h3>
+					<h3 id="navi"> Navigation </h3>
 
 					<ul>
+						<!-- The links to the other pages on the site -->
 						<li><a class="selected" href=""> Home</a></li>
 						<li><a href="about.html">About</a></li>
-						<li><a href="">Contact</a></li>
+						<li><a href="contact.html">Contact</a></li>
 					</ul>
 				</div>
-
+				<!-- Main content section -->
 				<div id="main">
 
 					<form>
+						<!-- The search portion of the site -->
 						<fieldset>
 				
-						<legend> Movie Title Search: </legend>
-						<input type="text" name="movietitle" placeholder="Enter Movie Title" id="SearchText"/><br>
+						<legend id="legend"> Movie Title Search: </legend>
+						<input type="text" name="movietitle" placeholder="Enter Movie Title" id="SearchText"/>
 						<button type="button" onclick="Search()">Search </button>
 								
 						</fieldset>
 					</form>
 
-					<div id="numberResults">
-						<p> Number of results: <span id="numResults"> nothing searched, yet.</span></p>
-					</div>
+					<p id="numberResults"> Number of results: <span id="numResults"> nothing searched, yet.</span></p>
 				</div>
 			</div>
 		</div>

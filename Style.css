@@ -2,12 +2,19 @@ body
 {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 
-	background-color: #EEE;
+	background-color: #727272;
+	color: #CCCCCC;
 }
 
 a
 {
 	text-decoration: none;
+	color: white;
+}
+
+li
+{
+	margin: 15px;
 }
 
 h1, h2, h3
@@ -17,18 +24,19 @@ h1, h2, h3
 
 #header
 {
-	background-color: #66CCFF;
-	color:white;
+	background-color: #59CCF2;
+	color: white;
 	text-align: center;
 	padding: 10px;
 }
 
 #container
 {
-	background-color: white;
+	background-color: #3F3F3F;
 	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
+	overflow: hidden;
 }
 
 #content
@@ -62,12 +70,13 @@ td
 table 
 {
 	border-collapse: collapse;
+	background-color: #727272;
 }
 
 #tableHeader
 {
-	background-color: #4CAF50;
-	color: white;
+	background-color: #98DEF5;
+	color: #727272;
 	text-align: center;
 	font-size: 20px;
 	height: 35px;
@@ -81,12 +90,29 @@ table
 #navigation .selected
 {
 	font-weight: bold;
+	text-decoration: underline;
 }
 
 #navigation ul
 {
 	list-style-type: none;
 	padding: 0;
+}
+
+#navi
+{
+	color: #98DEF5;
+}
+
+#legend
+{
+	color: #98DEF5;
+}
+
+#pic
+{
+	display: block;
+	margin: auto;
 }
 
 .footer

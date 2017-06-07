@@ -104,6 +104,32 @@ table
 	color: #98DEF5;
 }
 
+.buttons
+{
+	display: inline-block;
+	margin: 0 auto;
+	
+}
+
+#currPage
+{
+	padding: 20px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+#prevButton
+{
+	border-radius: 50%;
+	background-color: #98DEF5;
+}
+
+#nextButton
+{
+	border-radius: 50%;
+	background-color: #98DEF5;
+}
+
 #legend
 {
 	color: #98DEF5;

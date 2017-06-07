@@ -135,19 +135,27 @@ function Search()
 				// Back Button
 				var buttons = document.createElement("div");
 				buttons.setAttribute("id", "buttons");
+
 				var backButton = document.createElement("button");
-				backButton.innerHTML = "Previous";
+				backButton.setAttribute("class", "buttons");
+				backButton.setAttribute("id", "prevButton");
+				backButton.innerHTML = "&#8249";
 				backButton.addEventListener("click", function() {ChangePage(-1);});
 				buttons.appendChild(backButton);
 
 				// Show current page
 				var page = document.createElement("p");
-				page.innerHTML = window.currentPage;
+				page.setAttribute("class", "buttons");
+				page.setAttribute("id", "currPage");
+				page.innerHTML = window.currentPage + " of " + numPages;
 				buttons.appendChild(page);
 
 				// Next button
 				var nextButton = document.createElement("button");
-				nextButton.innerHTML = "Next";
+				nextButton.setAttribute("class", "buttons");
+				nextButton.setAttribute("id", "nextButton");
+				nextButton.setAttribute("href", "");
+				nextButton.innerHTML = "&#8250";
 				nextButton.addEventListener("click", function() {ChangePage (1);});
 				buttons.appendChild(nextButton);
 

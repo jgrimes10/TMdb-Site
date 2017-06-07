@@ -171,7 +171,7 @@ function Search()
 				backButton.setAttribute("class", "buttons");
 				backButton.setAttribute("id", "prevButton");
 				backButton.innerHTML = "&#8249";
-				backButton.addEventListener("click", function() {ChangePage(-1);});
+				backButton.addEventListener("click", function() {ChangePage(-1, numPages);});
 				buttons.appendChild(backButton);
 
 				// Show current page
@@ -187,7 +187,7 @@ function Search()
 				nextButton.setAttribute("id", "nextButton");
 				nextButton.setAttribute("href", "");
 				nextButton.innerHTML = "&#8250";
-				nextButton.addEventListener("click", function() {ChangePage (1);});
+				nextButton.addEventListener("click", function() {ChangePage (1, numPages);});
 				buttons.appendChild(nextButton);
 
 				// Add the button division to the site
@@ -222,7 +222,7 @@ function Search()
 }
 
 // Function to change the current page
-function ChangePage(num)
+function ChangePage(num, totalPages)
 {
 	// Checking if the user is currently on the first page and tries to press previous
 	// Just don't do anything since there is no page before page 1
@@ -230,8 +230,18 @@ function ChangePage(num)
 	{
 		return;
 	}
+
 	// Otherwise handle the page change, either going +1 or -1 depending on which button is pressed
 	window.currentPage += num;
+
+	// Check if the user has reached the end of the pages, don't let them go further
+	if (currentPage > totalPages && num == 1)
+	{
+		// Set current page to last page if they are on the last page and click next page
+		currentPage = totalPages
+		// Return out so page doesn't refresh for nothing
+		return;
+	}
 
 	// Re-run the search function with the new page number so we get the new results from the API
 	Search();

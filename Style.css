@@ -104,6 +104,11 @@ table
 	color: #98DEF5;
 }
 
+#searchYear
+{
+	width: 200px;
+}
+
 .buttons
 {
 	display: inline-block;

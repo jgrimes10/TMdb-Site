@@ -69,8 +69,27 @@ function Search()
 
 	// Find the table
 	var table = document.getElementById("movieTable");
+
+	// Get user's entry for search year
+	var searchYear = document.getElementById("searchYear").value;
+	// Check if user entered a year
+	if (searchYear != "")
+	{
+		// Add year to URL search
+		yearURL = "&primary_release_year=" + searchYear;
+	}
+	// User wants movies from all time
+	else
+	{
+		// Don't add URL
+		yearURL = "";
+	}
+
 	// Save the search URL and enter in the search terms with the spaces replaced
-	var apiString = "https://api.themoviedb.org/3/search/movie?api_key=abb2f03094b79c25e3bb5a4d1a3c0f2e&language=en-US&query=" + searchWithNoSpaces + "&page=" + window.currentPage + "&include_adult=false";
+	var apiString = "https://api.themoviedb.org/3/search/movie?api_key=abb2f03094b79c25e3bb5a4d1a3c0f2e&language=en-US&query=" + searchWithNoSpaces + "&page=" + window.currentPage + "&include_adult=false" + yearURL;
+
+	// Create variable to store the image's web location
+	var imgString = "http://image.tmdb.org/t/p/w92/"
 
 	// Create the search
 	var xmlhttp = new XMLHttpRequest();
@@ -108,14 +127,19 @@ function Search()
 				// Cycle through all of the results returned in the JSON object
 				for (i = 0; i < myObj.results.length; i++) 
 				{
+					// Create image for the movie poster
+					var image = document.createElement('img');
+					image.src = imgString + myObj.results[i].poster_path;
 					// Add a row to the table for each result
 					var row = table.insertRow(0);
 					// Add cells for each result (movie title, release date, etc.)
 					var cell1 = row.insertCell(0);
 					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
 					// Set the cell information for each result
 					cell1.innerHTML = myObj.results[i].original_title;
 					cell2.innerHTML = myObj.results[i].release_date;
+					cell3.appendChild(image);
 				}
 				// Add the table headers and set their ID
 				var tableHeader = table.insertRow(0);
@@ -123,9 +147,12 @@ function Search()
 				header1.setAttribute("id", "tableHeader");
 				var header2 = tableHeader.insertCell(1);
 				header2.setAttribute("id", "tableHeader");
+				var header3 = tableHeader.insertCell(2);
+				header3.setAttribute("id", "tableHeader");
 				// Set table header text
 				header1.innerHTML = "Movie Title";
 				header2.innerHTML = "Release Date";
+				header3.innerHTML = "Movie Poster";
 				
 				// Find the number of results on the page and set the correct number
 				document.getElementById("numResults").innerHTML = numResults;
@@ -165,9 +192,6 @@ function Search()
 
 				// Add the button division to the site
 				document.getElementById("main").appendChild(buttons);
-
-				// Create the footer after table created so it will appear at bottom of page
-				CreateFooter(apiString);
 			}
 			
 			// Else, if there are no results found for search.
@@ -185,10 +209,7 @@ function Search()
 				
 				// Find the main section and add the no results message to it
 				var mainEle = document.getElementById("main");
-				mainEle.appendChild(noResultsMessage);
-				
-				// Create the footer after table created so it will appear at bottom of page
-				CreateFooter(apiString);
+				mainEle.appendChild(noResultsMessage);	
 			}
 		}
 	};
@@ -216,35 +237,12 @@ function ChangePage(num)
 	Search();
 }
 
-// Create the footer
-function CreateFooter(url)
+// Function to check user input in text fields
+function Enter(e)
 {
-	// Create the division
-	var div = document.createElement("div");
-	// Set divisions class so it can be formatted by CSS file
-	div.setAttribute("class", "footer");
-	// Set footer id
-	div.setAttribute("id", "footer");
-	
-	// Create the header
-	var header = document.createElement("p");
-	// Set header text
-	header.innerHTML = "= Search URL created =";
-	// Set header's class so it can be formatted by CSS file
-	header.setAttribute("class", "footer");
-	
-	// Create the paragraph element
-	var para = document.createElement("p");
-	// Set paragraphs id
-	para.setAttribute("id", "searchURL");
-	// Set footer text
-	para.innerHTML = url;
-	
-	var container = document.getElementById("container");
-	// Add the footer division to the site
-	container.appendChild(div);
-	// Add the footer title to the site
-	div.appendChild(header);
-	// Add the footer text to the site
-	div.appendChild(para);
+	// If user presses Enter, go ahead and search
+	if (e.keyCode == 13)
+	{
+		Search();
+	}
 }

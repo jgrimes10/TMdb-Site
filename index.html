@@ -37,9 +37,10 @@
 						<fieldset>
 				
 						<legend id="legend"> Movie Title Search: </legend>
-						<input type="text" name="movietitle" placeholder="Enter Movie Title" id="SearchText"/>
-						<button type="button" onclick="Search()">Search </button>
-								
+						<input type="text" onkeypress="Enter(event)" name="movietitle" placeholder="Enter Movie Title" id="SearchText"/><br>
+						<input type="text" onkeypress="Enter(event)" placeholder="Year (leave blank if searching all time)" id="searchYear">
+						<button type="button" onclick="Search()">Search</button>
+
 						</fieldset>
 					</form>
 

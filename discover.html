@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title> Movie Database Search </title>
+		<title> Discover Movies </title>
 
 		<!-- Load in the javascript file and the css file -->
 		<script type="text/javascript" src="SearchBrains.js"></script>
@@ -13,8 +13,8 @@
 		<div id="container">
 			<!-- The header for the website -->
 			<div id="header">
-				<h1> Movie Database Search </h1>
-				<p> This site utilizes the TMdb API to search the title of movies. </p>
+				<h1> Movie Discovery </h1>
+				<p> This site utilizes the TMdb API to discover movies. </p>
 			</div>
 			<!-- The container for the main body of the site (navigation and content) -->
 			<div id="content">
@@ -24,8 +24,8 @@
 
 					<ul>
 						<!-- The links to the other pages on the site -->
-						<li><a class="selected" href=""> Search</a></li>
-						<li><a href="discover.html"> Discover</a></li>
+						<li><a href="index.html"> Search</a></li>
+						<li><a class="selected" href=""> Discover</a></li>
 						<li><a href="about.html">About</a></li>
 						<li><a href="contact.html">Contact</a></li>
 					</ul>
@@ -37,11 +37,8 @@
 						<!-- The search portion of the site -->
 						<fieldset>
 				
-						<legend id="legend"> Movie Title Search: </legend>
-						<input type="text" onkeypress="Enter(event)" name="movietitle" placeholder="Enter Movie Title" id="SearchText"/><br>
-						<input type="text" onkeypress="Enter(event)" placeholder="Release Year" id="searchYear">
-						<p style="display:inline" id="yearHint"> *Leave blank to search all time </p><br>
-						<button type="button" onclick="Search()">Search</button>
+						<legend id="legend"> Discover Criteria: </legend>
+						<button id="popular" onclick="Discover('mostPopular');"> Most Popular </button>
 
 						</fieldset>
 					</form>

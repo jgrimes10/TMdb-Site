@@ -22,6 +22,11 @@ h1, h2, h3
 	margin: 0;
 }
 
+input
+{
+	width: 120px;
+}
+
 #header
 {
 	background-color: #59CCF2;
@@ -37,6 +42,7 @@ h1, h2, h3
 	margin-left: auto;
 	margin-right: auto;
 	overflow: hidden;
+	position: relative;
 }
 
 #content
@@ -104,9 +110,10 @@ table
 	color: #98DEF5;
 }
 
-#searchYear
+#yearHint
 {
-	width: 200px;
+	font-size: 12px;
+	vertical-align: middle;
 }
 
 .buttons

@@ -22,14 +22,6 @@ function ClearForNewSearch()
 		old.remove();
 	}
 	
-	// Find and delete the old footer
-	old = document.getElementById("footer");
-	
-	if (old != null)
-	{
-		old.remove();
-	}
-	
 	// If not results were found, delete that message as well
 	old = document.getElementById("noResults");
 	
@@ -67,9 +59,6 @@ function Search()
 		window.oldSearch = searchText;
 	}
 
-	// Find the table
-	var table = document.getElementById("movieTable");
-
 	// Get user's entry for search year
 	var searchYear = document.getElementById("searchYear").value;
 	// Check if user entered a year
@@ -105,120 +94,51 @@ function Search()
 			// Parse the JSON object and save to a variable
 			myObj = JSON.parse(this.responseText);
 			
-			//var string = JSON.stringify(myObj);
-			// Get the number of results and save to a variable
-			var numResults = myObj.total_results;
-
-			// Find and save the number of pages returned
-			var numPages = myObj.total_pages;
-			
-			// If there are actually results returned for the entered search
-			if (numResults != 0)
-				{
-				// Create the table
-				var table = document.createElement("TABLE");
-				// Set table's ID
-				table.setAttribute("id", "movieTable");
-
-				// Grab the main div and append the table to it
-				var mainEle = document.getElementById("main");
-				mainEle.appendChild(table);
-				
-				// Cycle through all of the results returned in the JSON object
-				for (i = 0; i < myObj.results.length; i++) 
-				{
-					// Create image for the movie poster
-					var image = document.createElement('img');
-					image.src = imgString + myObj.results[i].poster_path;
-					// Add a row to the table for each result
-					var row = table.insertRow(0);
-					// Add cells for each result (movie title, release date, etc.)
-					var cell1 = row.insertCell(0);
-					var cell2 = row.insertCell(1);
-					var cell3 = row.insertCell(2);
-					// Set the cell information for each result
-					cell1.innerHTML = myObj.results[i].original_title;
-					cell2.innerHTML = myObj.results[i].release_date;
-					cell3.appendChild(image);
-				}
-				// Add the table headers and set their ID
-				var tableHeader = table.insertRow(0);
-				var header1 = tableHeader.insertCell(0);
-				header1.setAttribute("id", "tableHeader");
-				var header2 = tableHeader.insertCell(1);
-				header2.setAttribute("id", "tableHeader");
-				var header3 = tableHeader.insertCell(2);
-				header3.setAttribute("id", "tableHeader");
-				// Set table header text
-				header1.innerHTML = "Movie Title";
-				header2.innerHTML = "Release Date";
-				header3.innerHTML = "Movie Poster";
-				
-				// Find the number of results on the page and set the correct number
-				document.getElementById("numResults").innerHTML = numResults;
-				
-				// If results were found make sure that the number of results text and header are visible
-				var num = document.getElementById("numberResults");
-				num.style.color = "#CCCCCC";
-				num.style.display = 'block';
-
-				// Forward and back buttons to navigate pages
-				// Back Button
-				var buttons = document.createElement("div");
-				buttons.setAttribute("id", "buttons");
-
-				var backButton = document.createElement("button");
-				backButton.setAttribute("class", "buttons");
-				backButton.setAttribute("id", "prevButton");
-				backButton.innerHTML = "&#8249";
-				backButton.addEventListener("click", function() {ChangePage(-1, numPages);});
-				buttons.appendChild(backButton);
-
-				// Show current page
-				var page = document.createElement("p");
-				page.setAttribute("class", "buttons");
-				page.setAttribute("id", "currPage");
-				page.innerHTML = window.currentPage + " of " + numPages;
-				buttons.appendChild(page);
-
-				// Next button
-				var nextButton = document.createElement("button");
-				nextButton.setAttribute("class", "buttons");
-				nextButton.setAttribute("id", "nextButton");
-				nextButton.setAttribute("href", "");
-				nextButton.innerHTML = "&#8250";
-				nextButton.addEventListener("click", function() {ChangePage (1, numPages);});
-				buttons.appendChild(nextButton);
-
-				// Add the button division to the site
-				document.getElementById("main").appendChild(buttons);
-			}
-			
-			// Else, if there are no results found for search.
-			else
-			{
-				var noResultsMessage = document.createElement("p");
-				noResultsMessage.setAttribute("id", "noResults");
-				
-				// Set no results text
-				noResultsMessage.innerHTML = "Sorry: No results were found for '" + searchText + "'. Please try a different search.";
-				
-				// Turn off the number of results and header if no results were found
-				var num = document.getElementById("numberResults");
-				num.style.display = 'none';
-				
-				// Find the main section and add the no results message to it
-				var mainEle = document.getElementById("main");
-				mainEle.appendChild(noResultsMessage);	
-			}
+			// INSERT TABLE HERE
+			CreateTable(myObj, apiString, imgString);
 		}
 	};
 
 	// Ask the API for information
 	xmlhttp.open("GET", apiString, true);
 	xmlhttp.send();
+}
 
-	//document.getElementById("resultTitle").innerHTML = "";
+function Discover(type)
+{
+	// Clear info already on screen
+	ClearForNewSearch();
+
+	// Create variable to store the image's web location
+	var imgString = "http://image.tmdb.org/t/p/w92/"
+
+	if (type == "mostPopular")
+	{
+		var apiString = "https://api.themoviedb.org/3/discover/movie?api_key=abb2f03094b79c25e3bb5a4d1a3c0f2e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page="+ window.currentPage;
+	}
+
+	// Create the search
+	var xmlhttp = new XMLHttpRequest();
+	// Create variables needed to create table
+	var myObj = "";
+	
+	// Connect and ask API for information
+	xmlhttp.onreadystatechange = function() 
+	{
+		// Make sure that request finished and response is ready & that status is OK
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			// Parse the JSON object and save to a variable
+			myObj = JSON.parse(this.responseText);
+			
+			// INSERT TABLE HERE
+			CreateTable(myObj, apiString, imgString);
+		}
+	};
+
+	// Ask the API for information
+	xmlhttp.open("GET", apiString, true);
+	xmlhttp.send();
 }
 
 // Function to change the current page
@@ -245,6 +165,115 @@ function ChangePage(num, totalPages)
 
 	// Re-run the search function with the new page number so we get the new results from the API
 	Search();
+}
+
+function CreateTable(jsonObject, apiString, imgString)
+{
+	// Find and save the number of results
+	var numResults = jsonObject.total_results;
+	
+	// Find and save the number of pages returned
+	var numPages = jsonObject.total_pages;
+
+	// If there are actually results returned for the entered search
+	if (numResults != 0)
+		{
+		// Create the table
+		var table = document.createElement("TABLE");
+		// Set table's ID
+		table.setAttribute("id", "movieTable");
+
+		// Grab the main div and append the table to it
+		var mainEle = document.getElementById("main");
+		mainEle.appendChild(table);
+		
+		// Cycle through all of the results returned in the JSON object
+		for (i = 0; i < jsonObject.results.length; i++) 
+		{
+			// Create image for the movie poster
+			var image = document.createElement('img');
+			image.src = imgString + jsonObject.results[i].poster_path;
+			// Add a row to the table for each result
+			var row = table.insertRow(0);
+			// Add cells for each result (movie title, release date, etc.)
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			// Set the cell information for each result
+			cell1.innerHTML = jsonObject.results[i].original_title;
+			cell2.innerHTML = jsonObject.results[i].release_date;
+			cell3.appendChild(image);
+		}
+		// Add the table headers and set their ID
+		var tableHeader = table.insertRow(0);
+		var header1 = tableHeader.insertCell(0);
+		header1.setAttribute("id", "tableHeader");
+		var header2 = tableHeader.insertCell(1);
+		header2.setAttribute("id", "tableHeader");
+		var header3 = tableHeader.insertCell(2);
+		header3.setAttribute("id", "tableHeader");
+		// Set table header text
+		header1.innerHTML = "Movie Title";
+		header2.innerHTML = "Release Date";
+		header3.innerHTML = "Movie Poster";
+		
+		// Find the number of results on the page and set the correct number
+		document.getElementById("numResults").innerHTML = numResults;
+		
+		// If results were found make sure that the number of results text and header are visible
+		var num = document.getElementById("numberResults");
+		num.style.color = "#CCCCCC";
+		num.style.display = 'block';
+
+		// Forward and back buttons to navigate pages
+		// Back Button
+		var buttons = document.createElement("div");
+		buttons.setAttribute("id", "buttons");
+
+		var backButton = document.createElement("button");
+		backButton.setAttribute("class", "buttons");
+		backButton.setAttribute("id", "prevButton");
+		backButton.innerHTML = "&#8249";
+		backButton.addEventListener("click", function() {ChangePage(-1, numPages);});
+		buttons.appendChild(backButton);
+
+		// Show current page
+		var page = document.createElement("p");
+		page.setAttribute("class", "buttons");
+		page.setAttribute("id", "currPage");
+		page.innerHTML = window.currentPage + " of " + numPages;
+		buttons.appendChild(page);
+
+		// Next button
+		var nextButton = document.createElement("button");
+		nextButton.setAttribute("class", "buttons");
+		nextButton.setAttribute("id", "nextButton");
+		nextButton.setAttribute("href", "");
+		nextButton.innerHTML = "&#8250";
+		nextButton.addEventListener("click", function() {ChangePage (1, numPages);});
+		buttons.appendChild(nextButton);
+
+		// Add the button division to the site
+		document.getElementById("main").appendChild(buttons);
+	}
+	
+	// Else, if there are no results found for search.
+	else
+	{
+		var noResultsMessage = document.createElement("p");
+		noResultsMessage.setAttribute("id", "noResults");
+		
+		// Set no results text
+		noResultsMessage.innerHTML = "Sorry: No results were found for '" + searchText + "'. Please try a different search.";
+		
+		// Turn off the number of results and header if no results were found
+		var num = document.getElementById("numberResults");
+		num.style.display = 'none';
+		
+		// Find the main section and add the no results message to it
+		var mainEle = document.getElementById("main");
+		mainEle.appendChild(noResultsMessage);	
+	}
 }
 
 // Function to check user input in text fields

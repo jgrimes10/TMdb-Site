@@ -2,13 +2,14 @@
 
 // Function to handle clearing out old elements already on the screen
 // so that a new search may be done
-// === And always check to make sure it's not null, incase it's the first search 
-// or there was no table due to no results or visa versa ===
+// === And always check to make sure it's not null, in case it's the first search 
+// or there was no table due to no results or vice versa ===
 	
 // Set a variable for which page the user is currently on
 var currentPage = 1;
 
-// 
+// Variable to hold and compare the old search term so that we can set the
+// current page back to one if a new search term is entered
 var oldSearch = "";
 
 function ClearForNewSearch()
@@ -57,9 +58,12 @@ function Search()
 	// Replace the spaces in the search term with %20 so it can be used in the URL
 	var searchWithNoSpaces = searchText.replace(/\s/g, "%20");
 
+	// Check if the search term has changed
 	if (window.oldSearch != searchText)
 	{
+		// If it has, change the current page back to one
 		window.currentPage = 1;
+		// And save the new search text to compare to
 		window.oldSearch = searchText;
 	}
 
@@ -159,6 +163,7 @@ function Search()
 				nextButton.addEventListener("click", function() {ChangePage (1);});
 				buttons.appendChild(nextButton);
 
+				// Add the button division to the site
 				document.getElementById("main").appendChild(buttons);
 
 				// Create the footer after table created so it will appear at bottom of page
@@ -195,14 +200,19 @@ function Search()
 	//document.getElementById("resultTitle").innerHTML = "";
 }
 
+// Function to change the current page
 function ChangePage(num)
 {
+	// Checking if the user is currently on the first page and tries to press previous
+	// Just don't do anything since there is no page before page 1
 	if (window.currentPage == 1 && num == -1)
 	{
 		return;
 	}
+	// Otherwise handle the page change, either going +1 or -1 depending on which button is pressed
 	window.currentPage += num;
 
+	// Re-run the search function with the new page number so we get the new results from the API
 	Search();
 }
 

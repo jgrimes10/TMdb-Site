@@ -108,7 +108,6 @@ table
 {
 	display: inline-block;
 	margin: 0 auto;
-	
 }
 
 #currPage
@@ -133,6 +132,7 @@ table
 #legend
 {
 	color: #98DEF5;
+	font-size: 20px;
 }
 
 #pic

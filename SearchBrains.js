@@ -254,8 +254,10 @@ function CreateTable(jsonObject, apiString, imgString, caller)
 			cell3.innerHTML = jsonObject.results[i].vote_average;
 			cell4.appendChild(image);
 
+			// If the path to the poster is null meaning there is no poster on the site
 			if (jsonObject.results[i].poster_path == null)
 			{
+				// Display message on site instead of default image icon
 				cell4.innerHTML = "No Movie Poster Found";
 			}
 		}

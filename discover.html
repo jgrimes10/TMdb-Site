@@ -38,7 +38,9 @@
 						<fieldset>
 				
 						<legend id="legend"> Discover Criteria: </legend>
-						<button id="popular" onclick="Discover('mostPopular');"> Most Popular </button>
+						<button id="popular" onclick="Discover('mostPopular'); return false;"> Most Popular </button>
+						<button id="latest" onclick="Discover('latest'); return false;"> Latest Movies </button>
+						<button id="highestVoted" onclick="Discover('highestVoted'); return false;"> Highest Voted </button>
 
 						</fieldset>
 					</form>

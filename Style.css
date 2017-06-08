@@ -27,6 +27,11 @@ input
 	width: 120px;
 }
 
+td
+{
+	text-align: center;
+}
+
 #header
 {
 	background-color: #59CCF2;
@@ -38,7 +43,7 @@ input
 #container
 {
 	background-color: #3F3F3F;
-	width: 800px;
+	width: 1000px;
 	margin-left: auto;
 	margin-right: auto;
 	overflow: hidden;
@@ -58,7 +63,7 @@ input
 
 #main
 {
-	width: 600px;
+	width: 800px;
 	float: right;
 }
 
@@ -116,14 +121,33 @@ table
 	vertical-align: middle;
 }
 
-.buttons
+button
 {
-	display: inline-block;
-	margin: 0 auto;
+    background-color: #59CCF2;
+	border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+button:hover
+{
+	background-color: #727272;
+	color: #59CCF2;
+}
+
+button:active
+{
+	background-color: #3F3F3F;
 }
 
 #currPage
 {
+	display: inline-block;
 	padding: 20px;
 	padding-left: 100px;
 	padding-right: 100px;
@@ -131,12 +155,14 @@ table
 
 #prevButton
 {
+	display: inline-block;
 	border-radius: 50%;
 	background-color: #98DEF5;
 }
 
 #nextButton
 {
+	display: inline-block;
 	border-radius: 50%;
 	background-color: #98DEF5;
 }

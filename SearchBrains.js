@@ -95,7 +95,7 @@ function Search()
 			myObj = JSON.parse(this.responseText);
 			
 			// INSERT TABLE HERE
-			CreateTable(myObj, apiString, imgString);
+			CreateTable(myObj, apiString, imgString, "Search");
 		}
 	};
 
@@ -111,16 +111,57 @@ function Discover(type)
 
 	// Create variable to store the image's web location
 	var imgString = "http://image.tmdb.org/t/p/w92/"
-
-	if (type == "mostPopular")
+	// Variable to compare to what has been passed in
+	var discoverType = "";
+	// If oldSearch is empty
+	if (oldSearch == "")
 	{
+		// Search for what type has been passed in
+		discoverType = type;
+	}
+	// If user picked other button
+	else if (oldSearch != type)
+	{
+		discoverType = type;
+		window.currentPage = 1;
+	}
+	// If oldSearch isn't empty, i.e. changing pages
+	else
+	{
+		// Changing pages: keep the same URL just append new currentPage
+		discoverType = oldSearch;
+	}
+	// Switch on type to know which search URL to use
+	switch(discoverType)
+	{
+		// Searching for most popular movies
+		case "mostPopular":
 		var apiString = "https://api.themoviedb.org/3/discover/movie?api_key=abb2f03094b79c25e3bb5a4d1a3c0f2e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page="+ window.currentPage;
+		window.oldSearch = "mostPopular";
+		break;
+
+		// Searching all moves in database and sort date in descending order
+		case "latest":
+		var apiString = "https://api.themoviedb.org/3/discover/movie?api_key=abb2f03094b79c25e3bb5a4d1a3c0f2e&language=en-US&sort_by=release_date.desc&include_adult=false&include_video=false&page="+ window.currentPage;
+		window.oldSearch = "latest";
+		break;
+
+		// Searching for highest voted movies
+		case "highestVoted":
+		var apiString = "https://api.themoviedb.org/3/discover/movie?api_key=abb2f03094b79c25e3bb5a4d1a3c0f2e&language=en-US&sort_by=highest_voted.desc&include_adult=false&include_video=false&page=" + window.currentPage;
+		window.oldSearch = "highestVoted";
+		break;
+
+		// Throw an error if something happens that shouldn't.
+		// Should NEVER get to this...
+		default:
+		alert("Something went wrong (SearchBrains.js - switch(type): " + discoverType);
+		break;
+
 	}
 
 	// Create the search
 	var xmlhttp = new XMLHttpRequest();
-	// Create variables needed to create table
-	var myObj = "";
 	
 	// Connect and ask API for information
 	xmlhttp.onreadystatechange = function() 
@@ -129,10 +170,10 @@ function Discover(type)
 		if (this.readyState == 4 && this.status == 200) 
 		{
 			// Parse the JSON object and save to a variable
-			myObj = JSON.parse(this.responseText);
-			
+			 var myObj = JSON.parse(this.responseText);
+
 			// INSERT TABLE HERE
-			CreateTable(myObj, apiString, imgString);
+			CreateTable(myObj, apiString, imgString, "Discover");
 		}
 	};
 
@@ -142,7 +183,7 @@ function Discover(type)
 }
 
 // Function to change the current page
-function ChangePage(num, totalPages)
+function ChangePage(num, totalPages, caller)
 {
 	// Checking if the user is currently on the first page and tries to press previous
 	// Just don't do anything since there is no page before page 1
@@ -163,11 +204,18 @@ function ChangePage(num, totalPages)
 		return;
 	}
 
-	// Re-run the search function with the new page number so we get the new results from the API
-	Search();
+	if (caller == "Search")
+	{
+		// Re-run the search function with the new page number so we get the new results from the API
+		Search();
+	}
+	else
+	{
+		Discover(window.oldSearch);
+	}
 }
 
-function CreateTable(jsonObject, apiString, imgString)
+function CreateTable(jsonObject, apiString, imgString, caller)
 {
 	// Find and save the number of results
 	var numResults = jsonObject.total_results;
@@ -199,11 +247,19 @@ function CreateTable(jsonObject, apiString, imgString)
 			var cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
 			// Set the cell information for each result
 			cell1.innerHTML = jsonObject.results[i].original_title;
 			cell2.innerHTML = jsonObject.results[i].release_date;
-			cell3.appendChild(image);
+			cell3.innerHTML = jsonObject.results[i].vote_average;
+			cell4.appendChild(image);
+
+			if (jsonObject.results[i].poster_path == null)
+			{
+				cell4.innerHTML = "No Movie Poster Found";
+			}
 		}
+
 		// Add the table headers and set their ID
 		var tableHeader = table.insertRow(0);
 		var header1 = tableHeader.insertCell(0);
@@ -212,10 +268,13 @@ function CreateTable(jsonObject, apiString, imgString)
 		header2.setAttribute("id", "tableHeader");
 		var header3 = tableHeader.insertCell(2);
 		header3.setAttribute("id", "tableHeader");
+		var header4 = tableHeader.insertCell(3);
+		header4.setAttribute("id", "tableHeader");
 		// Set table header text
 		header1.innerHTML = "Movie Title";
 		header2.innerHTML = "Release Date";
-		header3.innerHTML = "Movie Poster";
+		header3.innerHTML = "Average Vote";
+		header4.innerHTML = "Movie Poster";
 		
 		// Find the number of results on the page and set the correct number
 		document.getElementById("numResults").innerHTML = numResults;
@@ -234,7 +293,7 @@ function CreateTable(jsonObject, apiString, imgString)
 		backButton.setAttribute("class", "buttons");
 		backButton.setAttribute("id", "prevButton");
 		backButton.innerHTML = "&#8249";
-		backButton.addEventListener("click", function() {ChangePage(-1, numPages);});
+		backButton.addEventListener("click", function() {ChangePage(-1, numPages, caller);});
 		buttons.appendChild(backButton);
 
 		// Show current page
@@ -250,7 +309,7 @@ function CreateTable(jsonObject, apiString, imgString)
 		nextButton.setAttribute("id", "nextButton");
 		nextButton.setAttribute("href", "");
 		nextButton.innerHTML = "&#8250";
-		nextButton.addEventListener("click", function() {ChangePage (1, numPages);});
+		nextButton.addEventListener("click", function() {ChangePage (1, numPages, caller);});
 		buttons.appendChild(nextButton);
 
 		// Add the button division to the site

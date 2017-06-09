@@ -43,7 +43,7 @@ td
 #container
 {
 	background-color: #3F3F3F;
-	width: 1000px;
+	width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
 	overflow: hidden;
@@ -57,13 +57,13 @@ td
 
 #navigation
 {
-	width: 180px;
+	width: 300px;
 	float: left;
 }
 
 #main
 {
-	width: 800px;
+	width: 850px;
 	float: right;
 }
 
@@ -137,7 +137,7 @@ button
 button:hover
 {
 	background-color: #727272;
-	color: #59CCF2;
+	color: #98DEF5;
 }
 
 button:active
@@ -187,4 +187,78 @@ button:active
 	background-color: #999999;
 	color: white;
 	text-align: center;
+}
+
+/* BEGIN WEATHER SECTION */
+
+.weatherApp
+{
+    margin: auto;
+    width: 300px;
+    height: 160px;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 10px 10px 50px #888888;
+    overflow: hidden;
+    text-align: center;
+    font-family: "Mono";
+}
+
+.left
+{
+    float: left;
+    background: #262626;
+    padding: 10px;
+    width: 150px;
+    height: 100%;
+    color: white;
+}
+
+.temperature
+{
+    margin-top: 30px;
+    margin-bottom: 5px;
+    font-size: 32px;
+    font-weight: bold;
+    width: 150px;
+}
+
+.location
+{
+    font-size: 18px;
+    width: 100%;
+    width: 150px;
+}
+
+.right
+{
+    float: right;
+    width: 130px;
+    height: 100%;
+}
+
+.top
+{
+    height: 100px;
+    width: 100%;
+    margin: auto;
+    background: #98DEF5;
+}
+
+.top img
+{
+    margin-top: 15px;
+}
+
+.bottom
+{
+    height: 70px;
+    background: #59CCF2;
+    color: white;
+    font-weight: bold;
+}
+
+.humidity
+{
+    padding: 8px;
 }

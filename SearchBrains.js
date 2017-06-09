@@ -80,28 +80,8 @@ function Search()
 	// Create variable to store the image's web location
 	var imgString = "http://image.tmdb.org/t/p/w92/"
 
-	// Create the search
-	var xmlhttp = new XMLHttpRequest();
-	// Create variables needed to create table
-	var myObj, x, txt = "";
-	
-	// Connect and ask API for information
-	xmlhttp.onreadystatechange = function() 
-	{
-		// Make sure that request finished and response is ready & that status is OK
-		if (this.readyState == 4 && this.status == 200) 
-		{
-			// Parse the JSON object and save to a variable
-			myObj = JSON.parse(this.responseText);
-			
-			// INSERT TABLE HERE
-			CreateTable(myObj, apiString, imgString, "Search");
-		}
-	};
-
-	// Ask the API for information
-	xmlhttp.open("GET", apiString, true);
-	xmlhttp.send();
+	// SEND REQUEST WAS HERE
+	SendRequest(apiString, imgString, "Search");
 }
 
 function Discover(type)
@@ -159,7 +139,12 @@ function Discover(type)
 		break;
 
 	}
+	SendRequest(apiString, imgString, "Discover");
+	// SEND REQUEST WAS HERE
+}
 
+function SendRequest(apiString, imgString, caller)
+{
 	// Create the search
 	var xmlhttp = new XMLHttpRequest();
 	
@@ -173,7 +158,7 @@ function Discover(type)
 			 var myObj = JSON.parse(this.responseText);
 
 			// INSERT TABLE HERE
-			CreateTable(myObj, apiString, imgString, "Discover");
+			CreateTable(myObj, apiString, imgString, caller);
 		}
 	};
 

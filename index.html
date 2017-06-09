@@ -5,6 +5,7 @@
 
 		<!-- Load in the javascript file and the css file -->
 		<script type="text/javascript" src="SearchBrains.js"></script>
+		<script type="text/javascript" src="weatherBrains.js"></script>
 		<link rel="stylesheet" href="Style.css">
 
 	</head>
@@ -29,6 +30,29 @@
 						<li><a href="about.html">About</a></li>
 						<li><a href="contact.html">Contact</a></li>
 					</ul>
+
+					<div class="weatherApp">
+            			<div class="left">
+                			<div class="temperature"><span id="temperature">0</span>&deg;</div>
+                			<div class="location"><span id="location">Unknown</span></div>
+            			</div>
+            			<div class="right">
+               		   	    <div class="top">
+                    		<img id="icon" width="75px" src="imgs/codes/humidity.png"/>
+                		</div>
+
+                		<div class="bottom">
+                    		<div class="humidity">
+                        	<img src="imgs/humidity.png" height="16px"/>
+                        	<span id="humidity">0</span>%
+                   		</div>
+
+                    	<div class="wind">
+                     		<span id="wind">0</span> mph <span id="direction">N</span>
+                    	</div>
+                	</div>
+            	</div>
+        	</div>
 				</div>
 				<!-- Main content section -->
 				<div id="main">
